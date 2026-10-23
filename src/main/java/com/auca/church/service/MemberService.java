@@ -1,0 +1,54 @@
+package com.auca.church.service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import com.auca.church.domain.Member;
+import com.auca.church.repository.MemberRepository;
+
+@Service
+public class MemberService {
+
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    public Member save(Member member) {
+        return memberRepository.save(member);
+    }
+
+    public List<Member> findAll() {
+        return memberRepository.findAll();
+    }
+
+    public Optional<Member> findById(UUID id) {
+        return memberRepository.findById(id);
+    }
+
+    public String update(UUID id, Member body) {
+        Optional<Member> opt = memberRepository.findById(id);
+        if (opt.isEmpty()) {
+            return "The member with that id does not exist";
+        }
+        Member existing = opt.get();
+        existing.setFirstName(body.getFirstName());
+        existing.setLastName(body.getLastName());
+        existing.setMemberNumber(body.getMemberNumber());
+        existing.setPhone(body.getPhone());
+        existing.setCell(body.getCell());
+        memberRepository.save(existing);
+        return "Member updated successfully";
+    }
+
+    public String delete(UUID id) {
+        if (!memberRepository.existsById(id)) {
+            return "The member with that id does not exist";
+        }
+        memberRepository.deleteById(id);
+        return "Member deleted successfully";
+    }
+}
