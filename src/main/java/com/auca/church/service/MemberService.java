@@ -51,4 +51,9 @@ public class MemberService {
         memberRepository.deleteById(id);
         return "Member deleted successfully";
     }
+
+    // B1
+    public List<Member> findByCell(String cell) {
+        return memberRepository.findByCellIgnoreCaseOrderByLastNameAsc(cell);
+    }
 }

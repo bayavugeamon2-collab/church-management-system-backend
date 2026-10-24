@@ -1,5 +1,6 @@
 package com.auca.church.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.auca.church.domain.Visitation;
+import com.auca.church.domain.VisitationStatus;
 import com.auca.church.service.VisitationService;
 
 @RestController
@@ -56,5 +58,19 @@ public class VisitationController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
         return ResponseEntity.ok(message);
+    }
+
+    // B2
+    @GetMapping("/by-status")
+    public List<Visitation> byStatus(@RequestParam VisitationStatus status) {
+        return visitationService.findByStatus(status);
+    }
+
+    // B3
+    @GetMapping("/between")
+    public List<Visitation> between(@RequestParam String start, @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return visitationService.findBetween(startDate, endDate);
     }
 }

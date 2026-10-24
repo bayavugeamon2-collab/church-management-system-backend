@@ -57,4 +57,10 @@ public class MemberController {
         }
         return ResponseEntity.ok(message);
     }
+
+    // B1
+    @GetMapping("/by-cell")
+    public List<Member> byCell(@RequestParam String cell) {
+        return memberService.findByCell(cell);
+    }
 }

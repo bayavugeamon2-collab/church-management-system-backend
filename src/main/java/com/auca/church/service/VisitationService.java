@@ -1,5 +1,6 @@
 package com.auca.church.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +20,6 @@ public class VisitationService {
     }
 
     public Object save(Visitation visitation) {
-        // for A2 basic save - will be improved in D1
         if (visitation.getStatus() == null) {
             visitation.setStatus(VisitationStatus.REQUESTED);
         }
@@ -42,7 +42,6 @@ public class VisitationService {
         Visitation existing = opt.get();
         existing.setVisitDate(body.getVisitDate());
         existing.setPurpose(body.getPurpose());
-        // status is only changed through the status endpoint (D2)
         if (body.getMember() != null) {
             existing.setMember(body.getMember());
         }
@@ -59,5 +58,15 @@ public class VisitationService {
         }
         visitationRepository.deleteById(id);
         return "Visitation deleted successfully";
+    }
+
+    // B2
+    public List<Visitation> findByStatus(VisitationStatus status) {
+        return visitationRepository.findByStatusOrderByVisitDateAsc(status);
+    }
+
+    // B3
+    public List<Visitation> findBetween(LocalDate start, LocalDate end) {
+        return visitationRepository.findByVisitDateBetweenOrderByVisitDateAsc(start, end);
     }
 }
