@@ -7,14 +7,17 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import com.auca.church.domain.Member;
 import com.auca.church.repository.MemberRepository;
+import com.auca.church.repository.PastorRepository;
 
 @Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PastorRepository pastorRepository;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, PastorRepository pastorRepository) {
         this.memberRepository = memberRepository;
+        this.pastorRepository = pastorRepository;
     }
 
     public Member save(Member member) {
@@ -55,5 +58,13 @@ public class MemberService {
     // B1
     public List<Member> findByCell(String cell) {
         return memberRepository.findByCellIgnoreCaseOrderByLastNameAsc(cell);
+    }
+
+    // C4
+    public Object findMembersOfPastor(UUID pastorId) {
+        if (!pastorRepository.existsById(pastorId)) {
+            return "The pastor with that id does not exist";
+        }
+        return memberRepository.findMembersOfPastor(pastorId);
     }
 }

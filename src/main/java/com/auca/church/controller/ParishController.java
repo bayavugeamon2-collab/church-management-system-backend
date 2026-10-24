@@ -57,4 +57,10 @@ public class ParishController {
         }
         return ResponseEntity.ok(message);
     }
+
+    // C2
+    @GetMapping("/free")
+    public List<Parish> freeParishes() {
+        return parishService.findFreeParishes();
+    }
 }

@@ -47,4 +47,9 @@ public class MinistryService {
         ministryRepository.deleteById(id);
         return "Ministry deleted successfully";
     }
+
+    // C3
+    public List<Ministry> findUnused() {
+        return ministryRepository.findUnusedMinistries();
+    }
 }

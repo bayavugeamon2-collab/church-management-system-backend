@@ -52,4 +52,9 @@ public class PastorService {
         pastorRepository.deleteById(id);
         return "Pastor deleted successfully";
     }
+
+    // C1
+    public List<Pastor> findByMinistry(String name) {
+        return pastorRepository.findByMinistryName(name);
+    }
 }

@@ -57,4 +57,10 @@ public class MinistryController {
         }
         return ResponseEntity.ok(message);
     }
+
+    // C3
+    @GetMapping("/unused")
+    public List<Ministry> unused() {
+        return ministryService.findUnused();
+    }
 }

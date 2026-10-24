@@ -63,4 +63,14 @@ public class MemberController {
     public List<Member> byCell(@RequestParam String cell) {
         return memberService.findByCell(cell);
     }
+
+    // C4
+    @GetMapping("/of-pastor/{pastorId}")
+    public ResponseEntity<?> membersOfPastor(@PathVariable UUID pastorId) {
+        Object result = memberService.findMembersOfPastor(pastorId);
+        if (result instanceof String) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

@@ -57,4 +57,10 @@ public class PastorController {
         }
         return ResponseEntity.ok(message);
     }
+
+    // C1
+    @GetMapping("/by-ministry")
+    public List<Pastor> byMinistry(@RequestParam String name) {
+        return pastorService.findByMinistry(name);
+    }
 }

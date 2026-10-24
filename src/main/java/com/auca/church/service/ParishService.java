@@ -48,4 +48,9 @@ public class ParishService {
         parishRepository.deleteById(id);
         return "Parish deleted successfully";
     }
+
+    // C2
+    public List<Parish> findFreeParishes() {
+        return parishRepository.findFreeParishes();
+    }
 }
