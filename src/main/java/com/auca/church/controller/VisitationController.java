@@ -63,8 +63,12 @@ public class VisitationController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         String message = visitationService.delete(id);
+
         if (message.contains("does not exist")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (message.contains("visit reports")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
         return ResponseEntity.ok(message);
     }
