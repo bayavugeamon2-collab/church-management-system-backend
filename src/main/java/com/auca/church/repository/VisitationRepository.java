@@ -17,4 +17,7 @@ public interface VisitationRepository extends JpaRepository<Visitation, UUID> {
 
     // B3
     List<Visitation> findByVisitDateBetweenOrderByVisitDateAsc(LocalDate start, LocalDate end);
+
+    // D1
+    boolean existsByPastorIdAndVisitDateAndStatusNot(UUID pastorId, LocalDate visitDate, VisitationStatus status);
 }

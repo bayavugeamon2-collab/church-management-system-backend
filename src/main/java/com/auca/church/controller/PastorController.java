@@ -63,4 +63,34 @@ public class PastorController {
     public List<Pastor> byMinistry(@RequestParam String name) {
         return pastorService.findByMinistry(name);
     }
+
+    // D3
+    @PutMapping("/{pastorId}/ministries/{ministryId}")
+    public ResponseEntity<String> addMinistry(@PathVariable UUID pastorId,
+            @PathVariable UUID ministryId) {
+        String message = pastorService.addMinistry(pastorId, ministryId);
+
+        if (message.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (message.contains("already has")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.ok(message);
+    }
+
+    // D4
+    @PatchMapping("/{pastorId}/parish")
+    public ResponseEntity<String> changeParish(@PathVariable UUID pastorId,
+            @RequestParam int parishNumber) {
+        String message = pastorService.changeParish(pastorId, parishNumber);
+
+        if (message.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (message.contains("taken")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.ok(message);
+    }
 }

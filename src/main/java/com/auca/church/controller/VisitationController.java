@@ -21,9 +21,18 @@ public class VisitationController {
         this.visitationService = visitationService;
     }
 
+    // D1
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody Visitation visitation) {
-        visitationService.save(visitation);
+        Object result = visitationService.save(visitation);
+
+        if (result instanceof String) {
+            String msg = (String) result;
+            if (msg.contains("past")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(msg);
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(msg);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body("Visitation saved successfully");
     }
 
@@ -72,5 +81,20 @@ public class VisitationController {
         LocalDate startDate = LocalDate.parse(start);
         LocalDate endDate = LocalDate.parse(end);
         return visitationService.findBetween(startDate, endDate);
+    }
+
+    // D2
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<String> updateStatus(@PathVariable UUID id,
+            @RequestParam VisitationStatus status) {
+        String message = visitationService.updateStatus(id, status);
+
+        if (message.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (message.contains("Cannot change")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+        return ResponseEntity.ok(message);
     }
 }

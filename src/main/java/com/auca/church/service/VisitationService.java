@@ -19,10 +19,29 @@ public class VisitationService {
         this.visitationRepository = visitationRepository;
     }
 
+    // D1 - Safe saving
     public Object save(Visitation visitation) {
-        if (visitation.getStatus() == null) {
-            visitation.setStatus(VisitationStatus.REQUESTED);
+        // date cannot be in the past
+        if (visitation.getVisitDate() != null &&
+                visitation.getVisitDate().isBefore(LocalDate.now())) {
+            return "Visitation date cannot be in the past";
         }
+
+        // always start as REQUESTED
+        visitation.setStatus(VisitationStatus.REQUESTED);
+
+        // check if pastor already has a visitation on that date (not CALLED_OFF)
+        if (visitation.getPastor() != null && visitation.getVisitDate() != null) {
+            boolean booked = visitationRepository.existsByPastorIdAndVisitDateAndStatusNot(
+                    visitation.getPastor().getId(),
+                    visitation.getVisitDate(),
+                    VisitationStatus.CALLED_OFF);
+
+            if (booked) {
+                return "Pastor already has a visitation on that date";
+            }
+        }
+
         return visitationRepository.save(visitation);
     }
 
@@ -42,6 +61,7 @@ public class VisitationService {
         Visitation existing = opt.get();
         existing.setVisitDate(body.getVisitDate());
         existing.setPurpose(body.getPurpose());
+        // status is only changed in D2 endpoint
         if (body.getMember() != null) {
             existing.setMember(body.getMember());
         }
@@ -68,5 +88,37 @@ public class VisitationService {
     // B3
     public List<Visitation> findBetween(LocalDate start, LocalDate end) {
         return visitationRepository.findByVisitDateBetweenOrderByVisitDateAsc(start, end);
+    }
+
+    // D2 - Status flow
+    public String updateStatus(UUID id, VisitationStatus newStatus) {
+        Optional<Visitation> opt = visitationRepository.findById(id);
+        if (opt.isEmpty()) {
+            return "The visitation with that id does not exist";
+        }
+
+        Visitation visitation = opt.get();
+        VisitationStatus current = visitation.getStatus();
+
+        boolean allowed = false;
+
+        if (current == VisitationStatus.REQUESTED) {
+            if (newStatus == VisitationStatus.PLANNED || newStatus == VisitationStatus.CALLED_OFF) {
+                allowed = true;
+            }
+        } else if (current == VisitationStatus.PLANNED) {
+            if (newStatus == VisitationStatus.VISITED || newStatus == VisitationStatus.CALLED_OFF) {
+                allowed = true;
+            }
+        }
+        // VISITED and CALLED_OFF cannot change
+
+        if (!allowed) {
+            return "Cannot change status from " + current + " to " + newStatus;
+        }
+
+        visitation.setStatus(newStatus);
+        visitationRepository.save(visitation);
+        return "Visitation status updated successfully";
     }
 }
