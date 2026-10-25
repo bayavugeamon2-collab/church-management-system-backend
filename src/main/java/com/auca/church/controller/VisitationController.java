@@ -60,6 +60,7 @@ public class VisitationController {
         return ResponseEntity.ok(message);
     }
 
+    // E3
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         String message = visitationService.delete(id);
@@ -100,5 +101,17 @@ public class VisitationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
         }
         return ResponseEntity.ok(message);
+    }
+
+    // F1
+    @GetMapping("/stats/by-status")
+    public List<Object[]> statsByStatus() {
+        return visitationService.countByStatus();
+    }
+
+    // F2
+    @PatchMapping("/cancel-day")
+    public String cancelDay(@RequestParam UUID pastorId, @RequestParam String date) {
+        return visitationService.cancelDay(pastorId, LocalDate.parse(date));
     }
 }

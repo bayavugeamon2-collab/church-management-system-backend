@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.auca.church.domain.Visitation;
 import com.auca.church.domain.VisitationStatus;
 import com.auca.church.repository.VisitationRepository;
@@ -125,5 +126,17 @@ public class VisitationService {
         visitation.setStatus(newStatus);
         visitationRepository.save(visitation);
         return "Visitation status updated successfully";
+    }
+
+    // F1
+    public List<Object[]> countByStatus() {
+        return visitationRepository.countByStatus();
+    }
+
+    // F2
+    @Transactional
+    public String cancelDay(UUID pastorId, LocalDate date) {
+        int count = visitationRepository.cancelDay(pastorId, date);
+        return count + " visitations cancelled";
     }
 }
