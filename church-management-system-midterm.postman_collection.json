@@ -1,0 +1,779 @@
+{
+  "info": {
+    "_postman_id": "c9261266-1756-4fe8-8d2b-37dd8d5ddf18",
+    "name": "Church Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58384791",
+    "_collection_link": "https://go.postman.co/collection/58384791-c9261266-1756-4fe8-8d2b-37dd8d5ddf18?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. Seed Data",
+      "item": [
+        {
+          "name": "Ministries_post",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Worship\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Parishes_post",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"parishNumber\": 4, \"name\": \"Parish Gahanga\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/parishes/save",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "parishes",
+                "save"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pastors_post",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstName\": \"Gakwaya\",\r\n  \"lastName\": \"Samuel\",\r\n  \"phone\": \"0729768641\",\r\n  \"parish\": {\r\n    \"id\": \"8385e6df-a209-45db-aa89-03e40f07bdec\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/pastors/all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "pastors",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Members_post",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstName\": \"Emmima\",\r\n  \"lastName\": \"Uwimana\",\r\n  \"memberNumber\": \"MB-0111\",\r\n  \"phone\": \"0789802356\",\r\n  \"cell\": \"Gikondo\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/members/save",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "members",
+                "save"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Visitations_post",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"visitDate\": \"2026-10-27\",\r\n  \"purpose\": \"Prayer support\",\r\n  \"member\": { \"id\": \"c383ee4a-cc84-46b8-88ca-5676f75c0955\" },\r\n  \"pastor\": { \"id\": \"17199cd1-94d7-4479-9578-4ac7d34d408c\" }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/pastors/650a2ffb-67e9-46dc-8309-20bc476c45ab/ministries/ab767b2e-14cf-4b28-8e39-369e075ba03c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "pastors",
+                "650a2ffb-67e9-46dc-8309-20bc476c45ab",
+                "ministries",
+                "ab767b2e-14cf-4b28-8e39-369e075ba03c"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "visitations_post",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"visitDate\": \"2026-11-15\",\r\n  \"purpose\": \"Sick visit\",\r\n  \"member\": { \"id\": \"aac30673-d702-4a8c-bcd3-a5348bc7202f\" },\r\n  \"pastor\": { \"id\": \"650a2ffb-67e9-46dc-8309-20bc476c45ab\" }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/save",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "save"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Amon’s visitation on 2026-10-28",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/afcd394d-ea9a-4d4f-bc5f-ec11868455ec/status?status=CALLED_OFF",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "afcd394d-ea9a-4d4f-bc5f-ec11868455ec",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "CALLED_OFF"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create another visitation for Amon",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"visitDate\": \"2026-10-28\",\r\n  \"purpose\": \"Second visit_same_day\",\r\n  \"member\": { \"id\": \"1c701678-2a8c-410c-a96d-48207cb234f5\" },\r\n  \"pastor\": { \"id\": \"17199cd1-94d7-4479-9578-4ac7d34d408c\" }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/save",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "save"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "statuses_set_f1",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/12d82557-b1ae-4a85-b9fa-62e1a70b88c5/status?status=CALLED_OFF",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "12d82557-b1ae-4a85-b9fa-62e1a70b88c5",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "CALLED_OFF"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "statuses_set_f1",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/stats/by-status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "stats",
+                "by-status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "F2",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/cancel-day?pastorId=650a2ffb-67e9-46dc-8309-20bc476c45ab&date=2026-11-15",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "cancel-day"
+              ],
+              "query": [
+                {
+                  "key": "pastorId",
+                  "value": "650a2ffb-67e9-46dc-8309-20bc476c45ab"
+                },
+                {
+                  "key": "date",
+                  "value": "2026-11-15"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Part A - CRUD",
+      "item": [
+        {
+          "name": "B1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/members/by-cell?cell=kimihurura",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "members",
+                "by-cell"
+              ],
+              "query": [
+                {
+                  "key": "cell",
+                  "value": "kimihurura"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "B3",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Part B - Derived",
+      "item": [
+        {
+          "name": "B1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/members/by-cell?cell=kimihurura",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "members",
+                "by-cell"
+              ],
+              "query": [
+                {
+                  "key": "cell",
+                  "value": "kimihurura"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "B2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/by-status?status=REQUESTED",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "by-status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "REQUESTED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "B3",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Part C - JPQL",
+      "item": [
+        {
+          "name": "c2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/parishes/free",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "parishes",
+                "free"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "c3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/ministries/unused",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "ministries",
+                "unused"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "c1",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "C4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/members/of-pastor/17199cd1-94d7-4479-9578-4ac7d34d408c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "members",
+                "of-pastor",
+                "17199cd1-94d7-4479-9578-4ac7d34d408c"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Part D - Business Rules",
+      "item": [
+        {
+          "name": "D2",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/59f63c58-95c6-442a-aa59-d7f34562b17d/status?status=PLANNED",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "59f63c58-95c6-442a-aa59-d7f34562b17d",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PLANNED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "D2 invalid",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/e26ca152-d3d6-4985-8320-ed22b97a80a6/status?status=REQUESTED",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "e26ca152-d3d6-4985-8320-ed22b97a80a6",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "REQUESTED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "D3",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/pastors/9663348d-83f3-44ad-b179-4065d2715948/ministries/1fe10adf-c3f5-4b0c-8346-c40be675bfec",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "pastors",
+                "9663348d-83f3-44ad-b179-4065d2715948",
+                "ministries",
+                "1fe10adf-c3f5-4b0c-8346-c40be675bfec"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "D4",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/pastors/9663348d-83f3-44ad-b179-4065d2715948/parish?parishNumber=4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "pastors",
+                "9663348d-83f3-44ad-b179-4065d2715948",
+                "parish"
+              ],
+              "query": [
+                {
+                  "key": "parishNumber",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Part E - Visit Reports",
+      "item": [
+        {
+          "name": "E1",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"subject\": \"church support\",\r\n  \"notes\": \"Prayed with the family\",\r\n  \"attendees\": 6\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/visit-reports/save?visitationId=e26ca152-d3d6-4985-8320-ed22b97a80a6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visit-reports",
+                "save"
+              ],
+              "query": [
+                {
+                  "key": "visitationId",
+                  "value": "e26ca152-d3d6-4985-8320-ed22b97a80a6"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "E2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visit-reports/member/MB-0107",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visit-reports",
+                "member",
+                "MB-0107"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "E3",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/delete/e26ca152-d3d6-4985-8320-ed22b97a80a6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "delete",
+                "e26ca152-d3d6-4985-8320-ed22b97a80a6"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Part F - Reports",
+      "item": [
+        {
+          "name": "f2",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/visitations/cancel-day?pastorId=650a2ffb-67e9-46dc-8309-20bc476c45ab&date=2026-11-15",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "visitations",
+                "cancel-day"
+              ],
+              "query": [
+                {
+                  "key": "pastorId",
+                  "value": "650a2ffb-67e9-46dc-8309-20bc476c45ab"
+                },
+                {
+                  "key": "date",
+                  "value": "2026-11-15"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "dash",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/api/dashboard/summary",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "dashboard",
+                "summary"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pag",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
