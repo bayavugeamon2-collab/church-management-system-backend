@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -113,5 +117,20 @@ public class VisitationController {
     @PatchMapping("/cancel-day")
     public String cancelDay(@RequestParam UUID pastorId, @RequestParam String date) {
         return visitationService.cancelDay(pastorId, LocalDate.parse(date));
+    }
+
+    // Bonus
+    @GetMapping("/page")
+    public Page<Visitation> page(@RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String sort) {
+        String[] sortParts = sort.split(",");
+        String field = sortParts[0];
+        Sort.Direction direction = Sort.Direction.ASC;
+        if (sortParts.length > 1 && sortParts[1].equalsIgnoreCase("desc")) {
+            direction = Sort.Direction.DESC;
+        }
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, field));
+        return visitationService.findPage(pageable);
     }
 }

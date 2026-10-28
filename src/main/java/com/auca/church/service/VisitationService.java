@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.auca.church.domain.Visitation;
@@ -24,7 +26,7 @@ public class VisitationService {
         this.visitReportRepository = visitReportRepository;
     }
 
-    // D1 - Safe saving
+    // D1
     public Object save(Visitation visitation) {
         if (visitation.getVisitDate() != null &&
                 visitation.getVisitDate().isBefore(LocalDate.now())) {
@@ -73,7 +75,7 @@ public class VisitationService {
         return "Visitation updated successfully";
     }
 
-    // E3 - protect delete
+    // E3
     public String delete(UUID id) {
         if (!visitationRepository.existsById(id)) {
             return "The visitation with that id does not exist";
@@ -138,5 +140,10 @@ public class VisitationService {
     public String cancelDay(UUID pastorId, LocalDate date) {
         int count = visitationRepository.cancelDay(pastorId, date);
         return count + " visitations cancelled";
+    }
+
+    // Bonus
+    public Page<Visitation> findPage(Pageable pageable) {
+        return visitationRepository.findAll(pageable);
     }
 }
